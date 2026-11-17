@@ -105,10 +105,16 @@ body.ready .art{opacity:1;transform:scale(var(--zs,1))}
 .sw.a{transform-origin:var(--ox) 100%;animation:breathe 8s ease-in-out infinite}
 .sw.b{transform-origin:var(--ox) 100%;animation:breathe 7s ease-in-out -3s infinite}
 /* soft embossed Islamic pattern on the paper (nikah background only) */
-.emboss{position:absolute;inset:0;opacity:.35;
+.emboss{position:absolute;inset:0;opacity:.18;
   background:var(--pat-l) 0 0/calc(var(--u)*11),var(--pat-d) 1px 1px/calc(var(--u)*11);
   -webkit-mask-image:linear-gradient(#000 0,#000 48%,transparent 70%);mask-image:linear-gradient(#000 0,#000 48%,transparent 70%)}
-.roses .emboss{display:none}
+.halo{position:absolute;left:50%;top:30%;width:120%;aspect-ratio:1;transform:translate(-50%,-50%);opacity:0;transition:opacity 2.5s ease 1.5s;pointer-events:none}
+body.ready .halo{opacity:1}
+.halo svg{width:100%;height:100%;animation:spin 140s linear infinite;will-change:transform}
+.halo path,.halo circle{fill:none;stroke:#b39b6c;stroke-width:.3;opacity:.3}
+.halo .c2{opacity:.22}
+@keyframes spin{to{transform:rotate(360deg)}}
+.roses .halo{display:none}
 .spot{position:absolute;inset:0;background:radial-gradient(circle 34% at var(--mx,50%) var(--my,30%),rgba(255,255,255,.7),rgba(255,255,255,0) 70%);mix-blend-mode:soft-light;pointer-events:none}
 .shine{position:absolute;top:0;bottom:0;left:0;width:60%;background:linear-gradient(105deg,transparent 30%,rgba(255,252,240,.35) 50%,transparent 70%);transform:translate3d(-120%,0,0);animation:shineX 11s ease-in-out 3s infinite;pointer-events:none;will-change:transform}
 @keyframes shineX{0%{transform:translate3d(-120%,0,0)}50%,100%{transform:translate3d(220%,0,0)}}
@@ -130,15 +136,36 @@ body.ready .bloom{animation:bloom 2.6s ease-out 1.2s both}
 @keyframes ring{0%{opacity:.9;transform:translate(-50%,-50%) scale(.3)}100%{opacity:0;transform:translate(-50%,-50%) scale(9)}}
 .frame .orn.pulse{animation:starP 1.2s var(--ease)!important;opacity:1;transform:none}
 @keyframes starP{0%{transform:scale(1) rotate(0)}40%{transform:scale(1.7) rotate(45deg)}100%{transform:scale(1) rotate(90deg)}}
+.arh{font:400 max(15px,calc(var(--u)*3.6))/1.5 var(--arabic);color:#9a7d48;direction:rtl;margin-bottom:calc(var(--u)*.6)}
+.hij{margin-top:calc(var(--u)*.6);font:400 max(13px,calc(var(--u)*2.9)) var(--serif);color:var(--soft)}
+.hij b{font:400 1.05em var(--arabic);color:#9a7d48;font-weight:400}
 .hint{margin-top:calc(var(--u)*3.4);font:500 max(10px,calc(var(--u)*1.6)) var(--caps);letter-spacing:.3em;text-indent:.3em;text-transform:uppercase;color:var(--gold);display:flex;flex-direction:column;align-items:center;gap:6px}
 .hint i{width:1px;height:calc(var(--u)*6);background:linear-gradient(var(--gold),transparent);animation:drip 2s ease-in-out infinite;transform-origin:top}
 @keyframes drip{0%{transform:scaleY(0);opacity:1}70%{transform:scaleY(1);opacity:1}100%{opacity:0}}
 /* gold-foil Islamic arch frame */
+.frame .spandrel{opacity:0}
+body.ready .frame .spandrel{animation:spIn 2s ease 2.6s forwards}
+@keyframes spIn{to{opacity:.3}}
+.frame .f3{stroke:url(#gfoil);stroke-width:1;stroke-dasharray:none;stroke-dashoffset:0;opacity:0;fill:none;animation:none}
+body.ready .frame .spandrel{opacity:0}
+body.ready .frame .spandrel{animation:spIn 2s ease 2.6s forwards}
+@keyframes spIn{to{opacity:.3}}
+.frame .f3{animation:fade 1.6s ease 3.2s forwards}
+.lantern{transform-box:view-box;transform-origin:337.5px 121px;opacity:0}
+.lantern path,.lantern circle:not(.lg){fill:url(#gfoil);stroke:none}
+.lantern .cn,.lantern .rb{fill:none!important;stroke:url(#gfoil)!important;stroke-width:1.4;stroke-dasharray:none!important;stroke-dashoffset:0!important;animation:none!important}
+.lantern .bd{fill:rgba(255,243,210,.55)!important;stroke:url(#gfoil)!important;stroke-width:1.6;stroke-dasharray:none!important;stroke-dashoffset:0!important;animation:none!important}
+.lantern .lg{animation:glowP 3.5s ease-in-out infinite}
+body.ready .lantern{animation:fade 1.4s ease 3.6s forwards,swing 6s ease-in-out 3.6s infinite}
+@keyframes swing{0%,100%{transform:rotate(2.2deg)}50%{transform:rotate(-2.2deg)}}
+@keyframes glowP{0%,100%{opacity:.75}50%{opacity:1}}
+.stage::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:8;box-shadow:inset 0 0 calc(var(--u)*22) rgba(120,90,40,.16)}
 .frame{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 .frame path{fill:none;stroke:url(#gfoil);stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1}
+.frame .lantern path{stroke-dasharray:none;stroke-dashoffset:0}
 .frame .f1{stroke-width:2}.frame .f2{stroke-width:.9;opacity:.7}
 .frame .orn{fill:url(#gfoil);stroke:none;opacity:0;transform-box:fill-box;transform-origin:center;transform:scale(0) rotate(-45deg)}
-body.ready .frame path{animation:drawS 3.2s cubic-bezier(.5,0,.2,1) .9s forwards}
+body.ready .frame path:not(.lantern path):not(.f3){animation:drawS 3.2s cubic-bezier(.5,0,.2,1) .9s forwards}
 body.ready .frame .f2{animation-delay:1.3s}
 body.ready .frame .orn{animation:orn .9s var(--ease) 3.4s forwards}
 @keyframes orn{to{opacity:1;transform:none}}
@@ -160,11 +187,11 @@ body:not(.ready) .ch .it,body:not(.ready) .ch .l{animation-play-state:paused}
 .nm{width:100%}
 .nm>span:not(.and){display:block;white-space:nowrap;line-height:1.15}
 .nm>span:not(.and)>span{white-space:nowrap}
-.nm .l{display:inline-block;white-space:pre;opacity:0;background:linear-gradient(100deg,#6b5530 30%,#d9c08a 48%,#6b5530 66%) 0 0/300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;padding:0 .04em}
+.nm .l{display:inline-block;white-space:pre;opacity:0;background:linear-gradient(180deg,#7a5f2c 15%,#c9a861 48%,#e6cf98 56%,#8c6d34 85%);-webkit-background-clip:text;background-clip:text;color:transparent;padding:0 .04em}
 .ch.on .nm .l{animation:chIn 1.3s var(--ease) both calc(var(--i)*70ms + var(--b,0ms) + 1500ms)}
 @keyframes nmShim{0%{background-position:100% 0}60%,100%{background-position:-100% 0}}
 .nm .and{display:flex;align-items:center;justify-content:center;gap:calc(var(--u)*2.4);font:italic 400 calc(var(--u)*4)/1 var(--serif);color:var(--sage);margin:calc(var(--u)*1.2) 0}
-.nm .and::before,.nm .and::after{content:"";width:calc(var(--u)*9);height:1px;background:linear-gradient(90deg,transparent,var(--gold))}.nm .and::after{transform:scaleX(-1)}
+.nm .and::before,.nm .and::after{content:"";width:calc(var(--u)*11);height:5px;background:radial-gradient(circle at 100% 50%,var(--gold) 2px,transparent 2.5px),linear-gradient(90deg,transparent,var(--gold)) 0 50%/calc(100% - 7px) 1px no-repeat}.nm .and::after{transform:scaleX(-1)}
 .sub{font:italic 500 max(15px,calc(var(--u)*3.4))/1.35 var(--serif);color:var(--ink);margin-top:calc(var(--u)*1.8);max-width:92%}
 .dtl{display:flex;align-items:center;gap:calc(var(--u)*2.2);margin-top:calc(var(--u)*2.4);font:400 max(12px,calc(var(--u)*3.1)) var(--caps);letter-spacing:.2em;color:var(--ink)}
 .dtl i{display:block;width:calc(var(--u)*6);height:1px;background:linear-gradient(90deg,transparent,var(--gold))}.dtl i:last-child{transform:scaleX(-1)}
@@ -182,7 +209,7 @@ body:not(.ready) .ch .it,body:not(.ready) .ch .l{animation-play-state:paused}
 .gl .d{fill:var(--gold);stroke:none;opacity:0}
 .ch.on .gl path{animation:drawS 1.6s ease .5s forwards}
 .ch.on .gl .d{animation:fade .8s ease 1.3s forwards}
-.h{font-family:var(--serif);font-style:italic;font-weight:500;font-size:calc(var(--u)*8.4);line-height:1.1;color:var(--ink)!important;margin-top:calc(var(--u)*.6)}
+.h{font-family:var(--serif);font-style:italic;font-weight:500;font-size:calc(var(--u)*8.4);line-height:1.1;;background:linear-gradient(180deg,#6d5428,#b8975a 55%,#7d6230);-webkit-background-clip:text;background-clip:text;color:transparent!important;padding:0 .08em;margin-top:calc(var(--u)*.6)}
 .p{font:500 max(15px,calc(var(--u)*3.3))/1.5 var(--serif);color:var(--ink);margin-top:calc(var(--u)*1.4)}
 .ayah{color:#8a6d38;font-size:max(18px,calc(var(--u)*4.7));line-height:2}
 .meaning{font:italic 500 max(15.5px,calc(var(--u)*3.6))/1.45 var(--serif);color:var(--ink);margin-top:calc(var(--u)*1.2)}
@@ -297,7 +324,7 @@ body.ready #wBtn{display:flex}
   <div class="stage" id="stage">
     <div class="par" id="par"><div class="art" id="art">
       <div class="bg"></div>
-      <div class="emboss"></div>
+      <div class="halo" aria-hidden="true"><svg viewBox="-100 -100 200 200" id="rosette"></svg></div>
       
       <div class="bloom"></div>
       <div id="stars"></div>
@@ -310,6 +337,24 @@ body.ready #wBtn{display:flex}
       <path class="orn" id="frStar"/>
       <rect class="orn" x="73" y="321" width="10" height="10" transform="rotate(45 78 326)"/>
       <rect class="orn" x="592" y="321" width="10" height="10" transform="rotate(45 597 326)"/>
+      <defs>
+        <pattern id="girih" width="44" height="44" patternUnits="userSpaceOnUse"><g fill="none" stroke="#b39b6c" stroke-width=".8"><rect x="13" y="13" width="18" height="18"/><rect x="13" y="13" width="18" height="18" transform="rotate(45 22 22)"/><path d="M0 0L9 9M44 0L35 9M0 44L9 35M44 44L35 35M22 0V9M22 44V35M0 22H9M44 22H35"/></g></pattern>
+        <linearGradient id="spfade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".55" stop-color="#fff"/><stop offset="1" stop-color="#000"/></linearGradient>
+        <mask id="spmask"><rect width="675" height="820" fill="url(#spfade)"/><path id="archFill" fill="#000"/></mask>
+      </defs>
+      
+      <path class="f3" id="fr3"/>
+      <path class="orn" id="frEndL"/><path class="orn" id="frEndR"/>
+      <defs><radialGradient id="lglow"><stop offset="0" stop-color="#fff6d8" stop-opacity="1"/><stop offset=".6" stop-color="#f3d99a" stop-opacity=".55"/><stop offset="1" stop-color="#e8d6a6" stop-opacity="0"/></radialGradient></defs>
+      <g class="lantern">
+        <path class="cn" d="M337.5 121V148"/>
+        <circle cx="337.5" cy="182" r="26" fill="url(#lglow)" class="lg"/>
+        <path d="M326 148H349L345 157H330Z"/>
+        <path class="bd" d="M330 157Q314 180 329 206H346Q361 180 345 157Z"/>
+        <path class="rb" d="M337.5 157V206M330 160Q324 181 331 204M345 160Q351 181 344 204"/>
+        <path d="M328 206H347L343 213H332Z"/>
+        <path class="cn" d="M337.5 213V224"/><circle cx="337.5" cy="227" r="2.6"/>
+      </g>
     </svg>
 
     <main class="view" id="view">
@@ -346,6 +391,7 @@ body.ready #wBtn{display:flex}
         <div class="day it" style="--i:1" id="dDay"></div>
         <div class="mo emb it" style="--i:2" id="dMon"></div>
         <div class="tm it" style="--i:3" id="dTime"></div>
+        <div class="hij it" style="--i:3" id="dHijri"></div>
         <div class="rings it" style="--i:4" id="rings"></div>
         <div class="row it" style="--i:5"><a class="btn sm" id="cal" target="_blank" rel="noopener">Add to calendar</a></div>
       </section>
@@ -426,11 +472,24 @@ $('stars').innerHTML=A.stars.map(([x,y,d],i)=>`<i class="star" style="--x:${x}%;
 const pat=c=>`url("data:image/svg+xml,${encodeURIComponent(`<svg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'><g fill='none' stroke='${c}' stroke-width='.9'><rect x='18' y='18' width='24' height='24'/><rect x='18' y='18' width='24' height='24' transform='rotate(45 30 30)'/><path d='M0 30H13M47 30H60M30 0V13M30 47V60'/></g></svg>`)}")`;
 root.style.setProperty('--pat-l',pat('rgba(255,255,255,.95)'));root.style.setProperty('--pat-d',pat('rgba(120,100,70,.16)'));
 
+/* ---- background rosette ---- */
+{const s=(r,ri,rot=0)=>{let d='';for(let i=0;i<16;i++){const a=Math.PI/8*i+rot,rr=i%2?ri:r;d+=(i?'L':'M')+(rr*Math.cos(a)).toFixed(2)+' '+(rr*Math.sin(a)).toFixed(2)}return d+'Z'};
+ let h=`<path d="${s(92,70)}"/><path class="c2" d="${s(92,70,Math.PI/8)}"/><circle r="97"/><circle class="c2" r="62"/>`;$('rosette').innerHTML=h;}
 /* ---- Islamic arch frame (675×1200 card units) ---- */
 function arch(x0,x1,top,rise,bottom){const sp=top+rise,m=(x0+x1)/2,hw=m-x0;
   return `M${x0} ${bottom}V${sp}C${x0} ${sp-rise*.55} ${m-hw*.32} ${top+rise*.14} ${m} ${top}C${m+hw*.32} ${top+rise*.14} ${x1} ${sp-rise*.55} ${x1} ${sp}V${bottom}`;}
 $('fr1').setAttribute('d',arch(78,597,104,222,792));
 $('fr2').setAttribute('d',arch(91,584,121,212,792));
+{ // scalloped (cusped) inner edge along the arch
+ const tmp=document.createElementNS('http://www.w3.org/2000/svg','path');tmp.setAttribute('d',arch(103,572,139,203,792));$('fr3').parentNode.appendChild(tmp);
+ const L=tmp.getTotalLength(),step=L/Math.round(L/16);let d='';
+ for(let s=0;s<L-1;s+=step){const a=tmp.getPointAtLength(s),b=tmp.getPointAtLength(Math.min(L,s+step)),mx=(a.x+b.x)/2,my=(a.y+b.y)/2;
+  let nx=-(b.y-a.y),ny=b.x-a.x;const k=Math.hypot(nx,ny)||1;nx/=k;ny/=k;if((337.5-mx)*nx+(500-my)*ny<0){nx=-nx;ny=-ny}
+  d+=(s?'':`M${a.x.toFixed(1)} ${a.y.toFixed(1)}`)+`Q${(mx+nx*7).toFixed(1)} ${(my+ny*7).toFixed(1)} ${b.x.toFixed(1)} ${b.y.toFixed(1)}`}
+ tmp.remove();$('fr3').setAttribute('d',d);}
+$('archFill').setAttribute('d',arch(70,605,90,230,830)+'Z');
+{const st=(cx,cy,r)=>{let d='';for(let i=0;i<16;i++){const a=Math.PI/8*i-Math.PI/2,rr=i%2?r*.5:r;d+=(i?'L':'M')+(cx+rr*Math.cos(a)).toFixed(1)+' '+(cy+rr*Math.sin(a)).toFixed(1)}return d+'Z'};
+ $('frEndL').setAttribute('d',st(78,796,9));$('frEndR').setAttribute('d',st(597,796,9));}
 {let d='';for(let i=0;i<16;i++){const a=Math.PI/8*i-Math.PI/2,r=i%2?6.5:13;d+=(i?'L':'M')+(337.5+r*Math.cos(a)).toFixed(1)+' '+(92+r*Math.sin(a)).toFixed(1)}$('frStar').setAttribute('d',d+'Z');}
 
 /* ---- fill text ---- */
@@ -447,6 +506,9 @@ split($('nG'),C.groom,0);
 function fitNames(){const box=$('view').clientWidth*.98;[$('nG'),$('nB')].forEach(el=>{el.style.fontSize='';const w=el.scrollWidth;if(w>box)el.style.fontSize=(box/w)+'em'})}
 addEventListener('resize',fitNames);document.fonts&&document.fonts.ready.then(fitNames);setTimeout(fitNames,50);split($('nB'),C.bride,C.groom.length*70+250);
 $('cDate').textContent=`${pad(Dd)} · ${pad(M)} · ${Y}`;
+try{const hd=new Intl.DateTimeFormat('en-GB-u-ca-islamic-umalqura',{day:'numeric',month:'long',year:'numeric',timeZone:'Asia/Kolkata'}).format(T).replace(/\s*AH$/,'');
+ const ha=new Intl.DateTimeFormat('ar-u-ca-islamic-umalqura-nu-arab',{day:'numeric',month:'long',year:'numeric',timeZone:'Asia/Kolkata'}).format(T);
+ $('dHijri').textContent=`${hd} AH`}catch(_){}
 $('dDay').textContent=pad(Dd);$('dMon').textContent=MON[M-1]+' · '+Y;$('dTime').textContent=wd+' · '+C.timeText;
 $('mapB').href=C.venue.map||('https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(C.venue.name+' '+C.venue.address));
 { // calendar: Apple devices get an .ics file, others Google Calendar
@@ -466,7 +528,7 @@ function tick(){const d=Math.max(0,tg-Date.now()),v=[d/864e5|0,d%864e5/36e5|0,d%
 tick();setInterval(tick,1000);
 
 /* ---- chapters ---- */
-const chs=[...document.querySelectorAll('.ch')],N=chs.length,view=$('view');
+const chs=[...document.querySelectorAll('section.ch')],N=chs.length,view=$('view');
 const NARROW=matchMedia('(max-aspect-ratio:53/100)').matches;
 const CAM=[['50% 50%',1],['50% 20%',1.03],['20% 85%',1.03],['50% 40%',1.02],['80% 85%',1.03],['50% 30%',1.02],['50% 80%',1.03]].map(c=>NARROW?[c[0],1]:c);
 let cur=0,busy=false;
@@ -504,26 +566,24 @@ $('openB').onclick=()=>{if(!pl)tm();begin();
 
 /* ---- music: soft pad + bells (or your own file) ---- */
 let ctx,mg,pl=false;const audio=$('bgm');
-function build(){ // soft romantic piano: slow, gentle, with a warm hush underneath
+function build(){ // slow, gentle piano
  ctx=new(window.AudioContext||window.webkitAudioContext)();mg=ctx.createGain();mg.gain.value=0;
- const lp=ctx.createBiquadFilter();lp.type='lowpass';lp.frequency.value=2200;mg.connect(lp);lp.connect(ctx.destination);
- const len=ctx.sampleRate*2.5,buf=ctx.createBuffer(2,len,ctx.sampleRate);for(let c=0;c<2;c++){const d=buf.getChannelData(c);for(let i=0;i<len;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/len,2.4)}
- const rev=ctx.createConvolver();rev.buffer=buf;const wet=ctx.createGain();wet.gain.value=.55;rev.connect(wet);wet.connect(mg);
+ const lp=ctx.createBiquadFilter();lp.type='lowpass';lp.frequency.value=2000;mg.connect(lp);lp.connect(ctx.destination);
+ const len=ctx.sampleRate*3,buf=ctx.createBuffer(2,len,ctx.sampleRate);for(let c=0;c<2;c++){const d=buf.getChannelData(c);for(let i=0;i<len;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/len,2.2)}
+ const rev=ctx.createConvolver();rev.buffer=buf;const wet=ctx.createGain();wet.gain.value=.6;rev.connect(wet);wet.connect(mg);
  const hz=n=>440*Math.pow(2,(n-69)/12);
- const piano=(n,t,v,d)=>[[1,1],[2,.25]].forEach(([m,a])=>{const o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';o.frequency.value=hz(n)*m;
-   g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(v*a,t+.02);g.gain.exponentialRampToValueAtTime(v*a*.35,t+.5);g.gain.exponentialRampToValueAtTime(.0002,t+d/m);
+ const key=(n,t,v,d)=>[[1,1],[2,.22]].forEach(([m,a])=>{const o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';o.frequency.value=hz(n)*m;
+   g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(v*a,t+.025);g.gain.exponentialRampToValueAtTime(v*a*.4,t+.6);g.gain.exponentialRampToValueAtTime(.0002,t+d/m);
    o.connect(g);g.connect(mg);g.connect(rev);o.start(t);o.stop(t+d+.1)});
- const hush=(ns,t,d)=>ns.forEach(n=>{const o=ctx.createOscillator(),g=ctx.createGain();o.type='sine';o.frequency.value=hz(n);
-   g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.022,t+1.8);g.gain.linearRampToValueAtTime(0,t+d+.8);o.connect(g);g.connect(mg);o.start(t);o.stop(t+d+1)});
- // C – Am – F – G, then C – Em – F – G
- const CH=[[48,55,64],[45,52,60],[41,48,57],[43,50,59],[48,55,64],[40,47,55],[41,48,57],[43,50,59]];
- const MEL=[[76,0,0,74],[72,0,0,0],[72,0,74,76],[74,0,0,0],[76,0,79,0],[79,77,76,0],[77,0,76,72],[74,0,0,0]];
- const q=60/58;let bar=0,next=ctx.currentTime+.3;
- (function sched(){while(next<ctx.currentTime+2.5){if(pl){const b=bar%8,c=CH[b];
-   piano(c[0]-12,next,.09,5);hush([c[1]+12,c[2]+12],next,q*4);
-   [c[1],c[2],c[0]+12,c[2]].forEach((n,i)=>piano(n+12,next+i*q,.035,2.4));
-   if(bar>=2)MEL[b].forEach((n,i)=>{if(n)piano(n,next+i*q+.02,.075,3.2)})}
-  next+=q*4;bar++}setTimeout(sched,500)})()}
+ // F – C/E – Dm – Bb – F – C – Bb – C
+ const CH=[[41,53,57,60],[40,52,55,60],[38,50,53,57],[34,50,53,58],[41,53,57,60],[36,52,55,60],[34,50,53,58],[36,52,55,58]];
+ const MEL=[[72,0,69,0],[67,0,0,0],[69,0,72,0],[74,0,0,72],[72,0,69,67],[67,0,0,0],[65,0,67,69],[67,0,0,0]];
+ const q=60/52;let bar=0,next=ctx.currentTime+.3;
+ (function sched(){while(next<ctx.currentTime+3){if(pl){const b=bar%8,c=CH[b];
+   key(c[0],next,.09,5.5);
+   [c[1],c[2],c[3],c[2]].forEach((n,i)=>key(n+12,next+i*q,.03,2.6));
+   if(bar>=2)MEL[b].forEach((n,i)=>{if(n)key(n+(bar%16>=8?12:0),next+i*q+.03,.07,3.5)})}
+  next+=q*4;bar++}setTimeout(sched,600)})()}
 function tm(){pl=!pl;$('music').classList.toggle('p',!pl);
  if(C.musicFile){ if(pl){audio.src||(audio.src=C.musicFile);audio.volume=.6;audio.play().catch(()=>{})} else audio.pause(); return; }
  if(!ctx)build();mg.gain.cancelScheduledValues(ctx.currentTime);mg.gain.setValueAtTime(mg.gain.value,ctx.currentTime);
